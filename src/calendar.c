@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int daysInMonth(int monthNum, int year) {
     int days;
@@ -31,10 +32,35 @@ char* monthName(int m) {
     return months[m-1];
 }
 
+void monthHeader(char *month) {
+    int len = strlen(month);
+    int half = (35-len)/2;
+
+    if (len % 2 == 0) {
+	for (int i = 0; i < half; i++) {
+	    printf("-");
+	}
+	printf("%s",month);
+	for (int i = 0; i < half+1; i++) {
+	    printf("-");
+	}
+    } else {
+	for (int i = 0; i < half; i++) {
+            printf("-");
+        }
+        printf("%s",month); 
+        for (int i = 0; i < half; i++) {
+            printf("-");
+        }
+    }
+    printf("\n");
+}
+
 void printCal(int y) {
-    printf("\n\n    %d\n\n",y);
+    printf("\n\nYear: %d\n\n",y);
     for (int i = 1; i <= 12; i++) {
-	printf("\n-----%s-----\n",monthName(i));
+	monthHeader(monthName(i));
+	printf(" SUN  MON  TUE  WED  THU  FRI  SAT \n");
 	int num_days;
 	num_days = daysInMonth(i,y);
 	int current_date = 1;
@@ -48,23 +74,30 @@ void printCal(int y) {
 
         }
 	while (current_date <= num_days) {
-	    int n;
-            n = 1;
-            if (current_date > 9) {
-                n = 2;
-            }
 	    if (k > 6) {
 		k = 0;
 		printf("\n");
-		printf("%*s", 3-n,"");
-		printf("%d",current_date);
-		printf("%*s", 3-n,"");
+		if (current_date > 9) {
+		     printf("%*s", 1, "");
+		     printf("%d",current_date);
+                     printf("%*s", 2,"");
+		} else {
+		     printf("%*s", 2, "");
+                     printf("%d",current_date);
+                     printf("%*s", 2,"");
+		}
 		k++;
 		current_date ++;
 	    } else {
-		printf("%*s", 3-n,"");
-                printf("%d",current_date);
-                printf("%*s", 3-n,"");
+		if (current_date > 9) {
+                     printf("%*s", 1, "");
+                     printf("%d",current_date);
+                     printf("%*s", 2,"");
+                } else {
+                     printf("%*s", 2, "");
+                     printf("%d",current_date);
+                     printf("%*s", 2,"");
+                }
 		k++;
 		current_date++;
 	    }
