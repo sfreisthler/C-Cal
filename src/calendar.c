@@ -34,10 +34,45 @@ char* monthName(int m) {
 void printCal(int y) {
     printf("\n\n    %d\n\n",y);
     for (int i = 1; i <= 12; i++) {
-	
-	printf("%s\n",monthName(i));
-	int day = dayOfWeek(1,i,y);
-	printf("%d\n", day);
+	printf("\n-----%s-----\n",monthName(i));
+	int num_days;
+	num_days = daysInMonth(i,y);
+	int current_date = 1;
+	int first_day;
+	first_day = dayOfWeek(1,i,y);
+        int k = 0;
+	// Print any leading white space
+        while (k < first_day) {
+            printf("     ");
+	    k++;
+
+        }
+	while (current_date <= num_days) {
+	    int n;
+            n = 1;
+            if (current_date > 9) {
+                n = 2;
+            }
+	    if (k > 6) {
+		k = 0;
+		printf("\n");
+		printf("%*s", 3-n,"");
+		printf("%d",current_date);
+		printf("%*s", 3-n,"");
+		k++;
+		current_date ++;
+	    } else {
+		printf("%*s", 3-n,"");
+                printf("%d",current_date);
+                printf("%*s", 3-n,"");
+		k++;
+		current_date++;
+	    }
+	}
+
+
+	printf("\n");
+
     }
 }
 
