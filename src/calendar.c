@@ -32,10 +32,12 @@ char* monthName(int m) {
     return months[m-1];
 }
 
-void monthHeader(char *month) {
-    int len = strlen(month);
+void printMonth(int m, int y) {
+    char *month = monthName(m);
+    int len = strlen(month), num_days=daysInMonth(m,y), current_date=1,
+	first_day = dayOfWeek(1,m,y),counter=0;
     int half = (35-len)/2;
-
+    // Month header spacing
     if (len % 2 == 0) {
 	for (int i = 0; i < half; i++) {
 	    printf("-");
@@ -53,43 +55,18 @@ void monthHeader(char *month) {
             printf("-");
         }
     }
-    printf("\n");
-}
-
-void printCal(int y) {
-    printf("\n\nYear: %d\n\n",y);
-    for (int i = 1; i <= 12; i++) {
-	monthHeader(monthName(i));
-	printf(" SUN  MON  TUE  WED  THU  FRI  SAT \n");
-	int num_days;
-	num_days = daysInMonth(i,y);
-	int current_date = 1;
-	int first_day;
-	first_day = dayOfWeek(1,i,y);
-        int k = 0;
-	// Print any leading white space
-        while (k < first_day) {
+    // Days of the week heading
+    printf("\n SUN  MON  TUE  WED  THU  FRI  SAT \n");
+    // Print any leading white space
+        while (counter < first_day) {
             printf("     ");
-	    k++;
-
+	    counter++;
         }
-	while (current_date <= num_days) {
-	    if (k > 6) {
-		k = 0;
-		printf("\n");
-		if (current_date > 9) {
-		     printf("%*s", 1, "");
-		     printf("%d",current_date);
-                     printf("%*s", 2,"");
-		} else {
-		     printf("%*s", 2, "");
-                     printf("%d",current_date);
-                     printf("%*s", 2,"");
-		}
-		k++;
-		current_date ++;
-	    } else {
-		if (current_date > 9) {
+        while (current_date <= num_days) {
+            if (counter > 6) {
+                counter = 0;
+                printf("\n");
+                if (current_date > 9) {
                      printf("%*s", 1, "");
                      printf("%d",current_date);
                      printf("%*s", 2,"");
@@ -98,14 +75,29 @@ void printCal(int y) {
                      printf("%d",current_date);
                      printf("%*s", 2,"");
                 }
-		k++;
-		current_date++;
-	    }
+                counter++;
+                current_date ++;
+            } else {
+                if (current_date > 9) {
+                     printf("%*s", 1, "");
+                     printf("%d",current_date);
+                     printf("%*s", 2,"");
+                } else {
+                     printf("%*s", 2, "");
+                     printf("%d",current_date);
+                     printf("%*s", 2,"");
+                }
+                counter++;
+                current_date++;
+            }
 	}
-
-
 	printf("\n");
+}
 
+void printCal(int y) {
+    printf("\n\nYear: %d\n\n",y);
+    for (int i = 1; i <= 12; i++) {
+	printMonth(i,y);
     }
 }
 
