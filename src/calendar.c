@@ -7,9 +7,9 @@
 #include "build_calendar.h"
 
 void welcome() {
-    printf("1. Find Day\n");
+    printf("\n1. Find Day\n");
     printf("2. Print Month\n");
-    printf("3. Add Note\n");
+    printf("3. Print Year\n");
     printf("4. EXIT\n");
     printf("ENTER OPTION: ");
 }
@@ -24,7 +24,8 @@ void printLocalTime() {
     int date = tm->tm_mday;
     char *month = monthName(tm->tm_mon+1);
     int year = tm->tm_year + 1900;
-    printf("Current Date: %s, %s %d, %d\n",day,month,date,year);
+    printf("\nCurrent Date: %s, %s %d, %d\n",day,month,date,year);
+    printMonth(tm->tm_mon+1, year);
 }
 
 int main() {
@@ -34,7 +35,7 @@ int main() {
 
     while (running) {
 	welcome();
-	int option;
+	int option, month, year;
 	scanf("%d",&option);
 
 	switch(option) {
@@ -43,12 +44,19 @@ int main() {
 		break;
 	    case 2:
 		printf("Enter month/year (MM YYYY): ");
-		int month, year;
 		scanf("%d %d",&month, &year);
 		printMonth(month,year);
 		break;
+	    case 3:
+		printf("Enter year (YYYY): ");
+		scanf("%d", &year);
+		printCal(year);
+		break;
 	    case 4:
 		running = false;
+		break;
+	    default: 
+		printf("Unknown option\n");
 		break;
 	}
 
