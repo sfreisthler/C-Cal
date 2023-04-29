@@ -46,23 +46,25 @@ void printMonth(int m, int y) {
     // Month header spacing
     if (len % 2 == 0) {
         for (int i = 0; i < half; i++) {
-            printf("-");
+            printf("\033[1m\033[46m-");
         }
         printf("%s",month);
         for (int i = 0; i < half+1; i++) {
             printf("-");
         }
+	printf("\033[0m");
     } else {
         for (int i = 0; i < half; i++) {
-            printf("-");
+            printf("\033[1m\033[46m-");
         }
         printf("%s",month);
         for (int i = 0; i < half; i++) {
             printf("-");
         }
+	printf("\033[0m");
     }
     // Days of the week heading
-    printf("\n SUN  MON  TUE  WED  THU  FRI  SAT \n");
+    printf("\n \033[1mSUN  MON  TUE  WED  THU  FRI  SAT\033[0m\n");
     // Print any leading white space
         while (counter < first_day) {
             printf("     ");
