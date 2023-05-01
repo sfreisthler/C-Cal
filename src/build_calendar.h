@@ -37,6 +37,8 @@ int daysInMonth(int monthNum, int year);
 */
 int dayOfWeek(int d, int m, int y);
 
+void printDate(int d, bool current);
+
 /**
  * Takes in integers for the moth and year
  * Prints out formatted calendar for that month/year

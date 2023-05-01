@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,6 +39,25 @@ int dayOfWeek(int d, int m, int y) {
     return (y + y/4 - y/100 + y/400 + t[m-1] + d) % 7;
 }
 
+void printDate(int d, bool current) {
+    char *color;
+    if (current) {
+	color = "\033[31m";
+    } else {
+	color = "\033[0m";
+    }
+    if (d > 9) {
+        printf("%*s", 1, "");
+        printf("%s%d\033[0m",color,d);
+        printf("%*s", 2,"");
+    } else {
+        printf("%*s", 2, "");
+        printf("%s%d\033[0m",color,d);
+        printf("%*s", 2,"");
+    }
+
+}
+
 void printMonth(int m, int y) {
     char *month = monthName(m);
     int len = strlen(month), num_days=daysInMonth(m,y), current_date=1,
@@ -71,33 +91,20 @@ void printMonth(int m, int y) {
             counter++;
         }
         while (current_date <= num_days) {
+	    bool current = false;
+	    if (current_date == 5) {
+		current = true;
+	    }
+
             if (counter > 6) {
                 counter = 0;
                 printf("\n");
-                if (current_date > 9) {
-                     printf("%*s", 1, "");
-                     printf("%d",current_date);
-                     printf("%*s", 2,"");
-                } else {
-                     printf("%*s", 2, "");
-                     printf("%d",current_date);
-                     printf("%*s", 2,"");
-                }
-                counter++;
-                current_date ++;
+		printDate(current_date,current);
             } else {
-                if (current_date > 9) {
-                     printf("%*s", 1, "");
-                     printf("%d",current_date);
-                     printf("%*s", 2,"");
-                } else {
-                     printf("%*s", 2, "");
-                     printf("%d",current_date);
-                     printf("%*s", 2,"");
-                }
-                counter++;
-                current_date++;
+		printDate(current_date,current);
             }
+	    counter++;
+	    current_date++;
         }
         printf("\n");
 }
