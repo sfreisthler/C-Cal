@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "build_calendar.h"
 
 char* monthName(int m) {
@@ -59,6 +60,13 @@ void printDate(int d, bool current) {
 }
 
 void printMonth(int m, int y) {
+    time_t rawtime;
+    struct tm *tm;
+
+    time(&rawtime);
+    tm = localtime(&rawtime);
+    int date_cur = tm->tm_mday;
+    int month_cur = tm->tm_mon+1;
     char *month = monthName(m);
     int len = strlen(month), num_days=daysInMonth(m,y), current_date=1,
         first_day = dayOfWeek(1,m,y),counter=0;
@@ -92,7 +100,7 @@ void printMonth(int m, int y) {
         }
         while (current_date <= num_days) {
 	    bool current = false;
-	    if (current_date == 5) {
+	    if (current_date == date_cur && m == month_cur) {
 		current = true;
 	    }
 
